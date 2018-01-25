@@ -10,6 +10,8 @@ import { HomeComponent } from './home/home.component';
 // import { TransactionComponent } from './Transaction/Transaction.component'
 
 import { IdeaComponent } from './Idea/Idea.component';
+import { PersonComponent } from './Person/Person.component';
+
 import { PersonalWalletComponent } from './PersonalWallet/PersonalWallet.component';
 
 @NgModule({
@@ -18,7 +20,7 @@ import { PersonalWalletComponent } from './PersonalWallet/PersonalWallet.compone
 		HomeComponent,
     // TransactionComponent,
     IdeaComponent,
-		
+		PersonComponent,
     PersonalWalletComponent
 		
   ],

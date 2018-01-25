@@ -1,0 +1,144 @@
+<div class="modal fade" id="addPersonModal" tabindex="-1" role="dialog" aria-labelledby="addPersonModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="addPersonModalLabel">Add Person</h4>
+        </div>
+        <form [formGroup]="myForm">
+          <div class="modal-body">            
+                <div class="form-group text-left">
+                  <label for="personId">personId</label>
+                  
+                    <input formControlName="personId" type="text" class="form-control">
+                  
+                </div>
+                <div class="form-group text-left">
+                  <label for="description">firstName</label>
+                  
+                    <input formControlName="firstName" type="text" class="form-control">
+                  
+                </div>
+                <div class="form-group text-left">
+                  <label for="lastName">lastName</label>
+                    <input formControlName="lastName" type="text" class="form-control">                  
+                </div>              
+          </div>
+          <div class="modal-footer">
+            <button (click)="addPerson(myForm);" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  
+  <div class="modal fade" id="updateAssetModal" tabindex="-1" role="dialog" aria-labelledby="updateAssetModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="updateAssetModalLabel">Update Person</h4>
+        </div>
+        <form [formGroup]="myForm">
+          <div class="modal-body">
+  
+  
+            
+              <div class="form-group text-left">
+                <label for="personId">personId</label>
+  
+                
+                  <input [ngModel]="personId"formControlName="personId" type="text" class="form-control">
+                
+  
+              </div>
+            
+              <div class="form-group text-left">
+                <label for="firstName">firstName</label>
+  
+                
+                  <input [ngModel]="firstName" formControlName="firstName" type="text" class="form-control">
+                
+  
+              </div>
+            
+              <div class="form-group text-left">
+                <label for="lastName">lastName</label>
+                  <input [ngModel]="lastName" formControlName="lastName" type="text" class="form-control">  
+              </div>                                  
+          </div>
+          <div class="modal-footer">
+            <button (click)="updatePerson(myForm)" type="submit" class="btn btn-success" data-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="modal fade" id="deletePersonModal" tabindex="-1" role="dialog" aria-labelledby="deletePersonModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="deletePersonModalLabel">Delete Asset</h4>
+        </div>
+        <form [formGroup]="myForm" (ngSubmit)="deletePerson()">
+          <div class="modal-body">
+            Are you sure you want to delete this person?
+          </div>
+          <div class="modal-footer">
+            <button (click)="deletePerson()" type="submit" class="btn btn-danger" data-dismiss="modal">Yes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="container">
+      <div *ngIf="errorMessage" class="alert alert-danger" role="alert">
+          <strong>Error:</strong> {{errorMessage}}
+      </div>
+    <h1 id='participantName'>Person</h1>
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <button (click)="resetForm()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPersonModal">Add Asset</button>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-12">
+        <table class="table table-bordered table-responsive table-striped">
+          <thead class="thead">
+            <tr class="thead-cols">
+              
+                  <th class="info">personId</th>
+                  <th class="info">firstName</th>              
+                  <th class="info">lastName</th>
+                <th class="info">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let person of allPersons">
+                  <td>{{person.personId}}</td>
+                  <td>{{person.firstName}}</td>
+                  <td>{{person.lastName}}</td>
+              <td>
+                <button (click)="getForm(person.personId);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Person</button>
+  
+                <button (click)="setId(person.personId);" type="button" class="btn btn-danger" data-toggle="modal" data-target="#deletePersonModal">Delete Person</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

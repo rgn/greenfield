@@ -375,11 +375,11 @@
             
                 <td>{{asset.owner}}</td>
             
-                <td>{{asset.adapter}}</td>
+                <td title="{{asset.likedBy}}">{{ asset.likedBy?.length }}</td>
             
-                <td>{{asset.likedBy}}</td>
+                <td title="{{asset.likedBy}}">{{ asset.adapter?.length }}</td>
             
-                <td>{{asset.followedBy}}</td>
+                <td title="{{asset.followedBy}}">{{ asset.followedBy?.length }}</td>
             
             <td>
               <button (click)="getForm(asset.ideaId);" type="button" class="btn btn-success" data-toggle="modal" data-target="#updateAssetModal">Update Asset</button>

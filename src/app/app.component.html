@@ -6,6 +6,13 @@
     <ul class="nav navbar-nav navbar-right">
       <li class=""><a [routerLink]="['/']">Home</a></li>
       <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Participants
+          <span class="caret"></span></a>
+        <ul class="dropdown-menu">
+          <li><a [routerLink]="['/Person']">Person</a></li>
+        </ul>
+      </li>
+      <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets
           <span class="caret"></span></a>
         <ul class="dropdown-menu">

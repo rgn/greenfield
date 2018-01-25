@@ -1,8 +1,8 @@
 {
   "name": "greenfield-ui",
-  "description":"greendield ui",
+  "description":"My greenfield-ui project.",
   "version": "0.0.1",
-  "author": "Ralf Gnaedinger",
+  "author": "Ralf Gnädinger",
   "email": "ralf.gnaedinger@trivadis.com",
   "license": "Apache-2.0",
   "scripts": {
