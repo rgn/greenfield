@@ -1,30 +1,21 @@
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">greenfield-network@0.0.1</a>
-    </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li class=""><a [routerLink]="['/']">Home</a></li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Participants
-          <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          <li><a [routerLink]="['/Person']">Person</a></li>
-        </ul>
-      </li>
-      <li class="dropdown">
-        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Assets
-          <span class="caret"></span></a>
-        <ul class="dropdown-menu">
-          
-          <li><a [routerLink]="['/Idea']">Idea</a></li>
-          
-          <li><a [routerLink]="['/PersonalWallet']">PersonalWallet</a></li>
-          
-        </ul>
-      </li>
-    </ul>
-  </div>
-</nav>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <mat-icon>home</mat-icon>
+    <span [routerLink]="['/']">Greenfield</span>
+    
+    <span class="gf-spacer"></span>
+
+    <button mat-button [matMenuTriggerFor]="participantMenu">Participants</button>
+    <mat-menu #participantMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/Person']"><mat-icon>face</mat-icon> Person</button>      
+    </mat-menu>
+
+    <button mat-button [matMenuTriggerFor]="assetMenu">Assets</button>
+    <mat-menu #assetMenu="matMenu">
+      <button mat-menu-item [routerLink]="['/Idea']"><mat-icon>lightbulb</mat-icon> Ideas</button>
+      <button mat-menu-item [routerLink]="['/PersonalWallet']"><mat-icon>account balance wallet</mat-icon> Wallets</button>      
+    </mat-menu>
+  </mat-toolbar-row>
+</mat-toolbar>
 
 <router-outlet></router-outlet>
