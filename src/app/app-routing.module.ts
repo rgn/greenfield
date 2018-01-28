@@ -3,18 +3,19 @@ import { Routes, RouterModule } from '@angular/router';
 // import { TransactionComponent } from './Transaction/Transaction.component'
 import { HomeComponent } from './home/home.component';
 
-import { IdeaComponent } from './Idea/Idea.component';
-import { PersonComponent } from './Person/Person.component';
-import { PersonalWalletComponent } from './PersonalWallet/PersonalWallet.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { IdeaComponent } from './idea/idea.component';
+import { PersonComponent } from './person/person.component';
+import { PersonalWalletComponent } from './personalWallet/personalWallet.component';
 
 const routes: Routes = [
     // { path: 'transaction', component: TransactionComponent },
     {path: '', component: HomeComponent},
-    
-    { path: 'Person', component: PersonComponent},
-		{ path: 'Idea', component: IdeaComponent},
+    { path: 'dashboard', component: DashboardComponent },
+    { path: 'person', component: PersonComponent},
+		{ path: 'idea', component: IdeaComponent},
 		
-		{ path: 'PersonalWallet', component: PersonalWalletComponent},
+		{ path: 'wallet', component: PersonalWalletComponent},
 		
 		{path: '**', redirectTo:''}
 

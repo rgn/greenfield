@@ -7,8 +7,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Configuration } from '../configuration';
 import { DataService } from '../data.service';
-import { PersonalWalletComponent } from './PersonalWallet.component';
-import {PersonalWalletService} from './PersonalWallet.service';
+import { PersonalWalletComponent } from './personalWallet.component';
+import {PersonalWalletService} from './personalWallet.service';
 describe('PersonalWalletComponent', () => {
   let component: PersonalWalletComponent;
   let fixture: ComponentFixture<PersonalWalletComponent>;

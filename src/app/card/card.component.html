@@ -1,0 +1,25 @@
+<div class="ng-star-inserted" dnd-draggable [dragEnabled]="true">
+  <div class="card-wrapper">
+    <div class="card-title">
+      <div class="card-title-spacer" matTooltip="{{ idea.owner }}">{{ idea.description }}</div>
+
+      <button class="mat-icon-button" mat-icon-button="" type="button">      
+        <div class="mat-button-ripple mat-ripple mat-button-ripple-round" matripple="">    
+        </div>
+        <div class="mat-button-focus-overlay"></div>
+      </button>
+    </div>  
+    <div class="card-body">      
+      {{ idea.description }}
+    </div>
+    <div class="card-footer">
+        <div class="card-footer-spacer"></div>
+        <mat-chip-list>
+            <mat-chip matTooltip="Adapters"><mat-icon>person</mat-icon> {{ idea.adapter | count }}</mat-chip>
+            <mat-chip matTooltip="Days"><mat-icon>notifications</mat-icon> {{ idea.days | ifEmpty:0 }}</mat-chip>
+            <mat-chip matTooltip="Followers"><mat-icon>notifications</mat-icon> {{ idea.followedBy | count }}</mat-chip>
+            <mat-chip matTooltip="Likes"><mat-icon>star</mat-icon> {{ idea.likedBy | count }}</mat-chip>          
+        </mat-chip-list>
+      </div> 
+  </div>
+</div>

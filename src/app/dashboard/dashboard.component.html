@@ -1,0 +1,15 @@
+<div class="flex-container" 
+     fxLayout="row" 
+     fxLayout.xs="column"
+     fxLayoutAlign="center start"
+     fxLayoutAlign.xs="start">
+  <div class="flex-item" fxFlex="33%">
+    <app-board [boardName]="'Fresh!'" [ideas]="allIdeas | ideaStateFilter: 'FRESH'"></app-board>
+  </div>
+  <div class="flex-item" fxFlex>
+    <app-board [boardName]="'In Progress!'" [ideas]="allIdeas | ideaStateFilter: 'INWORK'"></app-board>
+  </div>
+  <div class="flex-item" fxFlex="33%">
+    <app-board [boardName]="'Finished!'" [ideas]="allIdeas | ideaStateFilter: 'FINISHED'"></app-board>
+  </div>
+</div>

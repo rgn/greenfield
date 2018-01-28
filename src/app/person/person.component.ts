@@ -1,52 +1,31 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { PersonalWalletService } from './PersonalWallet.service';
+import { PersonService } from './person.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
-	selector: 'app-PersonalWallet',
-	templateUrl: './PersonalWallet.component.html',
-	styleUrls: ['./PersonalWallet.component.css'],
-  providers: [PersonalWalletService]
+	selector: 'app-person',
+	templateUrl: './person.component.html',
+	styleUrls: ['./person.component.css'],
+  providers: [PersonService]
 })
-export class PersonalWalletComponent implements OnInit {
+export class PersonComponent implements OnInit {
 
   myForm: FormGroup;
 
-  private allAssets;
-  private asset;
+  public allPersons;
+  private person;
   private currentId;
-	private errorMessage;
+  public errorMessage;
 
-  
-      
-          walletId = new FormControl("", Validators.required);
-        
-  
-      
-          days = new FormControl("", Validators.required);
-        
-  
-      
-          owner = new FormControl("", Validators.required);
-        
-  
+    personId = new FormControl("", Validators.required);
+    firstName = new FormControl("", Validators.required);
+    lastName = new FormControl("", Validators.required);
 
-
-  constructor(private servicePersonalWallet:PersonalWalletService, fb: FormBuilder) {
+  constructor(private servicePerson:PersonService, fb: FormBuilder) {
     this.myForm = fb.group({
-    
-        
-          walletId:this.walletId,
-        
-    
-        
-          days:this.days,
-        
-    
-        
-          owner:this.owner
-        
-    
+    personId:this.personId,
+    firstName:this.firstName,
+    lastName:this.lastName
     });
   };
 
@@ -56,14 +35,14 @@ export class PersonalWalletComponent implements OnInit {
 
   loadAll(): Promise<any> {
     let tempList = [];
-    return this.servicePersonalWallet.getAll()
+    return this.servicePerson.getAll()
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       result.forEach(asset => {
         tempList.push(asset);
       });
-      this.allAssets = tempList;
+      this.allPersons = tempList;
     })
     .catch((error) => {
         if(error == 'Server error'){
@@ -103,58 +82,28 @@ export class PersonalWalletComponent implements OnInit {
     return this[name].value.indexOf(value) !== -1;
   }
 
-  addAsset(form: any): Promise<any> {
-    this.asset = {
-      $class: "com.trivadis.greenfield.PersonalWallet",
-      
-        
-          "walletId":this.walletId.value,
-        
-      
-        
-          "days":this.days.value,
-        
-      
-        
-          "owner":this.owner.value
-        
-      
+  addPerson(form: any): Promise<any> {
+    this.person = {
+      $class: "com.trivadis.greenfield.Person",
+        "personId":this.personId.value,
+        "firstName":this.firstName.value,
+        "lastName":this.lastName.value
     };
 
     this.myForm.setValue({
-      
-        
-          "walletId":null,
-        
-      
-        
-          "days":null,
-        
-      
-        
-          "owner":null
-        
-      
+        "personId":null,
+        "firstName":null,
+        "lastName":null
     });
 
-    return this.servicePersonalWallet.addAsset(this.asset)
+    return this.servicePerson.addAsset(this.person)
     .toPromise()
     .then(() => {
-			this.errorMessage = null;
+	  this.errorMessage = null;
       this.myForm.setValue({
-      
-        
-          "walletId":null,
-        
-      
-        
-          "days":null,
-        
-      
-        
-          "owner":null 
-        
-      
+        "personId":null,
+        "firstName":null,
+        "lastName":null
       });
     })
     .catch((error) => {
@@ -168,29 +117,16 @@ export class PersonalWalletComponent implements OnInit {
   }
 
 
-   updateAsset(form: any): Promise<any> {
-    this.asset = {
-      $class: "com.trivadis.greenfield.PersonalWallet",
-      
-        
-          
-        
-    
-        
-          
-            "days":this.days.value,
-          
-        
-    
-        
-          
-            "owner":this.owner.value
-          
-        
-    
+   updatePerson(form: any): Promise<any> {
+       console.log('fo');
+    this.person = {
+      $class: "com.trivadis.greenfield.Person",
+        "firstName":this.firstName.value,
+        "lastName":this.lastName.value,
     };
 
-    return this.servicePersonalWallet.updateAsset(form.get("walletId").value,this.asset)
+    console.log('update');
+    return this.servicePerson.updateAsset(form.get("personId").value,this.person)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -209,9 +145,9 @@ export class PersonalWalletComponent implements OnInit {
   }
 
 
-  deleteAsset(): Promise<any> {
+  deletePerson(): Promise<any> {
 
-    return this.servicePersonalWallet.deleteAsset(this.currentId)
+    return this.servicePerson.deleteAsset(this.currentId)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -235,54 +171,40 @@ export class PersonalWalletComponent implements OnInit {
 
   getForm(id: any): Promise<any>{
 
-    return this.servicePersonalWallet.getAsset(id)
+    return this.servicePerson.getAsset(id)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
-        
-          
-            "walletId":null,
-          
-        
-          
-            "days":null,
-          
-        
-          
-            "owner":null 
-          
-        
+        "personId":null,
+        "firstName":null,
+        "lastName":null
       };
-
-
-
       
-        if(result.walletId){
+        if(result.personId){
           
-            formObject.walletId = result.walletId;
+            formObject.personId = result.personId;
           
         }else{
-          formObject.walletId = null;
+          formObject.personId = null;
         }
       
-        if(result.days){
+        if(result.firstName){
           
-            formObject.days = result.days;
+            formObject.firstName = result.firstName;
           
         }else{
-          formObject.days = null;
+          formObject.firstName = null;
         }
       
-        if(result.owner){
+        if(result.lastName){
           
-            formObject.owner = result.owner;
+            formObject.lastName = result.lastName;
           
         }else{
-          formObject.owner = null;
+          formObject.lastName = null;
         }
       
-
       this.myForm.setValue(formObject);
 
     })
@@ -302,19 +224,9 @@ export class PersonalWalletComponent implements OnInit {
 
   resetForm(): void{
     this.myForm.setValue({
-      
-        
-          "walletId":null,
-        
-      
-        
-          "days":null,
-        
-      
-        
-          "owner":null 
-        
-      
+          "personId":null,
+          "firstName":null,
+          "lastName":null
       });
   }
 

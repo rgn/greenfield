@@ -3,17 +3,19 @@
     <mat-icon>home</mat-icon>
     <span [routerLink]="['/']">Greenfield</span>
     
+    <button mat-menu-item [routerLink]="['/dashboard']"><mat-icon>face</mat-icon> Dashboard</button>      
+
     <span class="gf-spacer"></span>
 
     <button mat-button [matMenuTriggerFor]="participantMenu">Participants</button>
     <mat-menu #participantMenu="matMenu">
-      <button mat-menu-item [routerLink]="['/Person']"><mat-icon>face</mat-icon> Person</button>      
+      <button mat-menu-item [routerLink]="['/person']"><mat-icon>face</mat-icon> Person</button>      
     </mat-menu>
 
     <button mat-button [matMenuTriggerFor]="assetMenu">Assets</button>
     <mat-menu #assetMenu="matMenu">
-      <button mat-menu-item [routerLink]="['/Idea']"><mat-icon>lightbulb</mat-icon> Ideas</button>
-      <button mat-menu-item [routerLink]="['/PersonalWallet']"><mat-icon>account balance wallet</mat-icon> Wallets</button>      
+      <button mat-menu-item [routerLink]="['/idea']"><mat-icon>lightbulb</mat-icon> Ideas</button>
+      <button mat-menu-item [routerLink]="['/wallet']"><mat-icon>account balance wallet</mat-icon> Wallets</button>      
     </mat-menu>
   </mat-toolbar-row>
 </mat-toolbar>

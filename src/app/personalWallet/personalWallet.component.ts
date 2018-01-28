@@ -1,31 +1,31 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { PersonService } from './Person.service';
+import { PersonalWalletService } from './personalWallet.service';
 import 'rxjs/add/operator/toPromise';
 @Component({
-	selector: 'app-Person',
-	templateUrl: './Person.component.html',
-	styleUrls: ['./Person.component.css'],
-  providers: [PersonService]
+	selector: 'app-personal-wallet',
+	templateUrl: './personalWallet.component.html',
+	styleUrls: ['./personalWallet.component.css'],
+  providers: [PersonalWalletService]
 })
-export class PersonComponent implements OnInit {
+export class PersonalWalletComponent implements OnInit {
 
   myForm: FormGroup;
 
-  private allPersons;
-  private person;
+  public allAssets;
+  private asset;
   private currentId;
-  private errorMessage;
+  public errorMessage;
 
-    personId = new FormControl("", Validators.required);
-    firstName = new FormControl("", Validators.required);
-    lastName = new FormControl("", Validators.required);
+  walletId = new FormControl("", Validators.required);
+  days = new FormControl("", Validators.required);
+  owner = new FormControl("", Validators.required);
 
-  constructor(private servicePerson:PersonService, fb: FormBuilder) {
+  constructor(private servicePersonalWallet:PersonalWalletService, fb: FormBuilder) {
     this.myForm = fb.group({
-    personId:this.personId,
-    firstName:this.firstName,
-    lastName:this.lastName
+      walletId: this.walletId,
+      days: this.days,
+      owner: this.owner
     });
   };
 
@@ -34,24 +34,22 @@ export class PersonComponent implements OnInit {
   }
 
   loadAll(): Promise<any> {
-    let tempList = [];
-    return this.servicePerson.getAll()
+    return this.servicePersonalWallet.getAll()
     .toPromise()
     .then((result) => {
-			this.errorMessage = null;
+      let tempList = [];
+      this.errorMessage = null;
       result.forEach(asset => {
         tempList.push(asset);
       });
-      this.allPersons = tempList;
+      this.allAssets = tempList;
     })
     .catch((error) => {
-        if(error == 'Server error'){
-            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-        }
-        else if(error == '404 - Not Found'){
-				this.errorMessage = "404 - Could not find API route. Please check your available APIs."
-        }
-        else{
+        if (error === 'Server error') {
+          this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+        } else if (error === '404 - Not Found') {
+          this.errorMessage = '404 - Could not find API route. Please check your available APIs.';
+        } else {
             this.errorMessage = error;
         }
     });
@@ -82,52 +80,49 @@ export class PersonComponent implements OnInit {
     return this[name].value.indexOf(value) !== -1;
   }
 
-  addPerson(form: any): Promise<any> {
-    this.person = {
-      $class: "com.trivadis.greenfield.Person",
-        "personId":this.personId.value,
-        "firstName":this.firstName.value,
-        "lastName":this.lastName.value
+  addAsset(form: any): Promise<any> {
+    this.asset = {
+      $class: 'com.trivadis.greenfield.PersonalWallet',
+        'walletId': this.walletId.value,
+        'days': this.days.value,
+        'owner': this.owner.value
     };
 
     this.myForm.setValue({
-        "personId":null,
-        "firstName":null,
-        "lastName":null
+      'walletId': null,
+      'days': null,
+      'owner': null
     });
 
-    return this.servicePerson.addAsset(this.person)
+    return this.servicePersonalWallet.addAsset(this.asset)
     .toPromise()
     .then(() => {
-	  this.errorMessage = null;
+      this.errorMessage = null;
       this.myForm.setValue({
-        "personId":null,
-        "firstName":null,
-        "lastName":null
+          'walletId': null,
+          'days': null,
+          'owner': null
       });
     })
     .catch((error) => {
-        if(error == 'Server error'){
-            this.errorMessage = "Could not connect to REST server. Please check your configuration details";
-        }
-        else{
+        if (error === 'Server error') {
+            this.errorMessage = 'Could not connect to REST server. Please check your configuration details';
+        } else {
             this.errorMessage = error;
         }
     });
   }
 
 
-   updatePerson(form: any): Promise<any> {
-       console.log('fo');
-    this.person = {
-      $class: "com.trivadis.greenfield.Person",
-        "firstName":this.firstName.value,
-        "lastName":this.lastName.value,
+   updateAsset(form: any): Promise<any> {
+    this.asset = {
+      $class: 'com.trivadis.greenfield.PersonalWallet',
+      'days': this.days.value,
+      'owner': this.owner.value
     };
 
-    console.log('update');
-    return this.servicePerson.updateAsset(form.get("personId").value,this.person)
-		.toPromise()
+    return this.servicePersonalWallet.updateAsset(form.get('walletId').value, this.asset)
+.toPromise()
 		.then(() => {
 			this.errorMessage = null;
 		})
@@ -145,9 +140,9 @@ export class PersonComponent implements OnInit {
   }
 
 
-  deletePerson(): Promise<any> {
+  deleteAsset(): Promise<any> {
 
-    return this.servicePerson.deleteAsset(this.currentId)
+    return this.servicePersonalWallet.deleteAsset(this.currentId)
 		.toPromise()
 		.then(() => {
 			this.errorMessage = null;
@@ -171,40 +166,54 @@ export class PersonComponent implements OnInit {
 
   getForm(id: any): Promise<any>{
 
-    return this.servicePerson.getAsset(id)
+    return this.servicePersonalWallet.getAsset(id)
     .toPromise()
     .then((result) => {
 			this.errorMessage = null;
       let formObject = {
-        "personId":null,
-        "firstName":null,
-        "lastName":null
+        
+          
+            "walletId":null,
+          
+        
+          
+            "days":null,
+          
+        
+          
+            "owner":null 
+          
+        
       };
+
+
+
       
-        if(result.personId){
+        if(result.walletId){
           
-            formObject.personId = result.personId;
+            formObject.walletId = result.walletId;
           
         }else{
-          formObject.personId = null;
+          formObject.walletId = null;
         }
       
-        if(result.firstName){
+        if(result.days){
           
-            formObject.firstName = result.firstName;
+            formObject.days = result.days;
           
         }else{
-          formObject.firstName = null;
+          formObject.days = null;
         }
       
-        if(result.lastName){
+        if(result.owner){
           
-            formObject.lastName = result.lastName;
+            formObject.owner = result.owner;
           
         }else{
-          formObject.lastName = null;
+          formObject.owner = null;
         }
       
+
       this.myForm.setValue(formObject);
 
     })
@@ -224,9 +233,19 @@ export class PersonComponent implements OnInit {
 
   resetForm(): void{
     this.myForm.setValue({
-          "personId":null,
-          "firstName":null,
-          "lastName":null
+      
+        
+          "walletId":null,
+        
+      
+        
+          "days":null,
+        
+      
+        
+          "owner":null 
+        
+      
       });
   }
 
